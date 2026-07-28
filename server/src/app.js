@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const authRoutes = require("./routes/auth.route");
+const errorHandler = require("./middleware/error.middleware");
 
 const app = express();
 
@@ -16,6 +18,9 @@ app.use(express.json());
 
 // Log incoming requests
 app.use(morgan("dev"));
+
+app.use("/api/auth", authRoutes);
+app.use(errorHandler);
 
 //Health check route
 app.get("/api/health", (req, res) => {

@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const authRoutes = require("./routes/auth.route");
 const errorHandler = require("./middleware/error.middleware");
+const groupRoutes = require("./routes/group.route");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/groups", groupRoutes);
 app.use(errorHandler);
 
 //Health check route

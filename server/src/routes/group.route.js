@@ -8,6 +8,7 @@ const validate = require("../middleware/validation.middleware");
 
 const {
     createGroupValidation,
+    addMemberValidation,
 } = require("../validations/group.validation");
 
 router.post(
@@ -28,6 +29,14 @@ router.get(
     "/:groupId",
     authenticate,
     groupController.getGroup
+);
+
+router.post(
+    "/:groupId/members",
+    authenticate,
+    addMemberValidation,
+    validate,
+    groupController.addMember
 );
 
 module.exports = router;

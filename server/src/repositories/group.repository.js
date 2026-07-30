@@ -59,8 +59,40 @@ const getGroupById = async (groupId) => {
     });
 };
 
+const findUserByEmail = async (email) => {
+    return db.user.findUnique({
+        where: {
+            email,
+        },
+    });
+};
+
+const findMembership = async (groupId, userId) => {
+    return db.groupMember.findUnique({
+        where: {
+            groupId_userId: {
+                groupId: Number(groupId),
+                userId,
+            },
+        },
+    });
+};
+
+const addMember = async (groupId, userId) => {
+    return db.groupMember.create({
+        data: {
+            groupId: Number(groupId),
+            userId,
+            role: "MEMBER",
+        },
+    });
+};
+
 module.exports = {
     createGroup,
     getUserGroups,
     getGroupById,
+    findUserByEmail,
+    findMembership,
+    addMember,
 };

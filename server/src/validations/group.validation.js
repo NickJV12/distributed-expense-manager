@@ -11,6 +11,14 @@ const createGroupValidation = [
        .trim(),
 ];
 
+const addMemberValidation = [
+    body("email")
+       .trim()
+       .isEmail()
+       .withMessage("Please provide a valid email address"),
+];
+
 module.exports = {
     createGroupValidation,
+    addMemberValidation,
 };

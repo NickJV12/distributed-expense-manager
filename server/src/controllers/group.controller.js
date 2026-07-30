@@ -35,9 +35,26 @@ const getGroup = asyncHandler(async (req, res) => {
     });
 });
 
+const addMember = asyncHandler(async (req, res) => {
+    const { groupId } = req.params;
+    const { email } = req.body;
+
+    await groupService.addMember(
+        groupId,
+        req.user.id,
+        email
+    );
+
+    res.status(201).json({
+        success: true,
+        message: "Member added successfully",
+    });
+});
+
 module.exports = {
     createGroup,
     getGroups,
     getGroup,
+    addMember
 };
 

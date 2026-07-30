@@ -24,6 +24,43 @@ const createGroup = async (userId, groupData) => {
     });
 };
 
+const getUserGroups = async (userId) => {
+    return db.groupMember.findMany({
+        where: {
+            userId,
+        },
+        include: {
+            group: true,
+        },
+        orderBy: {
+            joinedAt: "desc", 
+        },
+    });
+};
+
+const getGroupById = async (groupId) => {
+    return db.group.findUnique({
+        where: {
+            id: Number(groupId),
+        },
+        include: {
+            members: {
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                        },
+                    },
+                },
+            },
+        },
+    });
+};
+
 module.exports = {
     createGroup,
+    getUserGroups,
+    getGroupById,
 };

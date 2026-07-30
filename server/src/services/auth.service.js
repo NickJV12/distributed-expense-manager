@@ -1,12 +1,14 @@
 const bcrypt = require("bcrypt");
 const authRepository = require("../repositories/auth.repository");
 const { generateToken } = require("../utils/jwt");
+const ConflictError = require("../errors/ConflictError");
+const UnauthorizedError = require("../errors/UnauthorizedError");
 
 const registerUser = async (userData) => {
     const existingUser = await authRepository.findUserByEmail(userData.email);
 
     if( existingUser ){
-        throw new Error("Email already exists");
+        throw new ConflictError("Email already exists");
     }
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -21,7 +23,7 @@ const loginUser = async ({email, password}) => {
     const user = await authRepository.findUserByEmail(email);
 
     if(!user){
-        throw new Error("Invalid email or password");
+        throw new UnauthorizedError("Invalid email or password");
     }
 
     const isPasswordCorrect = await bcrypt.compare(
@@ -30,7 +32,7 @@ const loginUser = async ({email, password}) => {
     );
 
     if(!isPasswordCorrect){
-        throw new Error("Invalid email or password");
+        throw new UnauthorizedError("Invalid email or password");
     }
 
     const token = generateToken(user);

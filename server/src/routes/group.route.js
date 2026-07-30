@@ -18,4 +18,16 @@ router.post(
     groupController.createGroup
 );
 
+router.get(
+    "/",
+    authenticate,
+    groupController.getGroups
+);
+
+router.get(
+    "/:groupId",
+    authenticate,
+    groupController.getGroup
+);
+
 module.exports = router;

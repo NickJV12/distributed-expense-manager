@@ -88,6 +88,14 @@ const addMember = async (groupId, userId) => {
     });
 };
 
+const getGroupMembers = async (groupId) => {
+    return db.groupMember.findMany({
+        where: {
+            groupId: Number(groupId),
+        },
+    });
+};
+
 module.exports = {
     createGroup,
     getUserGroups,
@@ -95,4 +103,5 @@ module.exports = {
     findUserByEmail,
     findMembership,
     addMember,
+    getGroupMembers
 };

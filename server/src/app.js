@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const authRoutes = require("./routes/auth.route");
 const errorHandler = require("./middleware/error.middleware");
 const groupRoutes = require("./routes/group.route");
+const expenseRoutes = require("./routes/expense.route");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/groups", groupRoutes);
+app.use("/api", expenseRoutes);
 app.use(errorHandler);
 
 //Health check route

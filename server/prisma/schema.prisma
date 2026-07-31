@@ -13,16 +13,20 @@ enum GroupRole {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  groupsCreated Group[]     @relation("GroupCreator")
+  groupsCreated    Group[]       @relation("GroupCreator")
   groupMemberships GroupMember[]
+
+  paidExpenses Expense[] @relation("ExpensePayer")
+
+  expenseParticipations ExpenseParticipant[]
 }
 
 model Group {
@@ -35,12 +39,13 @@ model Group {
 
   creator User @relation("GroupCreator", fields: [createdBy], references: [id], onDelete: Cascade)
 
-  members GroupMember[]
+  members  GroupMember[]
+  expenses Expense[]
 }
 
 model GroupMember {
-  groupId  Int
-  userId   Int
+  groupId Int
+  userId  Int
 
   role GroupRole @default(MEMBER)
 
@@ -53,3 +58,33 @@ model GroupMember {
   @@id([groupId, userId])
 }
 
+model Expense {
+  id          Int     @id @default(autoincrement())
+  description String
+  totalAmount Decimal @db.Decimal(10, 2)
+
+  groupId Int
+  paidBy  Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  payer User @relation("ExpensePayer", fields: [paidBy], references: [id], onDelete: Cascade)
+
+  participants ExpenseParticipant[]
+}
+
+model ExpenseParticipant {
+  expenseId Int
+  userId    Int
+
+  shareAmount Decimal @db.Decimal(10, 2)
+  amountPaid  Decimal @default(0) @db.Decimal(10, 2)
+
+  expense Expense @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([expenseId, userId])
+}

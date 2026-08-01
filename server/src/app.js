@@ -7,6 +7,9 @@ const errorHandler = require("./middleware/error.middleware");
 const groupRoutes = require("./routes/group.route");
 const expenseRoutes = require("./routes/expense.route");
 const settlementRoutes = require("./routes/settlement.route");
+const dashboardRoutes = require("./routes/dashboard.route");
+const analyticsRoutes = require("./routes/analytics.route");
+const paymentRoutes = require("./routes/payment.route");
 
 const app = express();
 
@@ -26,6 +29,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api", expenseRoutes);
 app.use("/api", settlementRoutes);
+app.use("/api", dashboardRoutes);
+app.use("/api", analyticsRoutes);
+app.use("/api", paymentRoutes);
 app.use(errorHandler);
 
 //Health check route

@@ -181,9 +181,40 @@ const updateExpense = async (
     });
 };
 
+const createSettlement = async (data) => {
+
+    return db.settlement.create({
+        data,
+        include: {
+            payer: true,
+            receiver: true,
+        },
+    });
+
+};
+
+const getSettlements = async (groupId) => {
+
+    return db.settlement.findMany({
+        where: {
+            groupId: Number(groupId),
+        },
+        include: {
+            payer: true,
+            receiver: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+
+};
+
 module.exports = {
     createExpense,
     getGroupExpenses,
     getExpenseById,
-    updateExpense
+    updateExpense,
+    createSettlement,
+    getSettlements
 };

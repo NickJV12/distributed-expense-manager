@@ -84,7 +84,106 @@ const getGroupExpenses = async (groupId) => {
     });
 };
 
+const getExpenseById = async (expenseId) => {
+    return db.expense.findUnique({
+        where: {
+            id: Number(expenseId),
+        },
+        include: {
+            payer: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                },
+            },
+            participants: {
+                include: {
+                    user: {
+                        select: {
+                            id:true,
+                            name: true,
+                            email: true,
+                        },
+                    },
+                },
+            },
+            group: {
+                select: {
+                    id: true, 
+                    name: true,
+                    ownerId: true,
+                },
+            },
+        },
+    });
+};
+
+const updateExpense = async (
+    expenseId, 
+    expenseData,
+    participants
+) => {
+    return db.$transaction(async (tx) => {
+        await tx.expense.update({
+            where: {
+                id: Number(expenseId),
+            },
+            data: expenseData,
+        });
+
+        await tx.expenseParticipant.deleteMany({
+            where: {
+                expenseId: Number(expenseId),
+            },
+        });
+
+        await tx.expenseParticipant.createMany({
+            data: participants.map((participant) => ({
+                expenseId: Number(expenseId),
+                userId: participant.userId,
+                shareAmount: participant.shareAmount,
+                amountPaid: participant.userId === expenseData.paidBy ? expenseData.totalAmount : 0,
+            })),
+        });
+
+        return tx.expense.findUnique({
+            where: {
+                id: Number(expenseId),
+            },
+            include: {
+                payer: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                    },
+                },
+                participants: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                            },
+                        },
+                    },
+                },
+                group: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+            },
+        });
+    });
+};
+
 module.exports = {
     createExpense,
     getGroupExpenses,
+    getExpenseById,
+    updateExpense
 };

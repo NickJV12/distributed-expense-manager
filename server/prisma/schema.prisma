@@ -12,6 +12,11 @@ enum GroupRole {
   MEMBER
 }
 
+enum SplitType {
+  EQUAL
+  EXACT
+}
+
 model User {
   id       Int    @id @default(autoincrement())
   name     String
@@ -63,6 +68,8 @@ model Expense {
   description String
   totalAmount Decimal @db.Decimal(10, 2)
 
+  splitType   SplitType @default(EQUAL)
+ 
   groupId Int
   paidBy  Int
 
@@ -70,7 +77,6 @@ model Expense {
   updatedAt DateTime @updatedAt
 
   group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
-
   payer User @relation("ExpensePayer", fields: [paidBy], references: [id], onDelete: Cascade)
 
   participants ExpenseParticipant[]

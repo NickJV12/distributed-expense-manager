@@ -10,6 +10,7 @@ const settlementRoutes = require("./routes/settlement.route");
 const dashboardRoutes = require("./routes/dashboard.route");
 const analyticsRoutes = require("./routes/analytics.route");
 const paymentRoutes = require("./routes/payment.route");
+const apiLimiter = require("./middleware/rateLimiter.middleware");
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use(express.json());
 
 // Log incoming requests
 app.use(morgan("dev"));
+
+app.use(apiLimiter);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/groups", groupRoutes);

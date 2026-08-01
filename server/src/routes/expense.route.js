@@ -10,6 +10,26 @@ const {
     createExpenseValidation,
 } = require("../validations/expense.validation");
 
+/**
+ * @swagger
+ * /groups/{groupId}/expenses:
+ *   post:
+ *     summary: Create expense
+ *     tags:
+ *       - Expenses
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: groupId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       201:
+ *         description: Expense created
+ */
+
 router.post(
     "/groups/:groupId/expenses",
     authenticate,

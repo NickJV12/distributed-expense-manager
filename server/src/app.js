@@ -11,6 +11,8 @@ const dashboardRoutes = require("./routes/dashboard.route");
 const analyticsRoutes = require("./routes/analytics.route");
 const paymentRoutes = require("./routes/payment.route");
 const apiLimiter = require("./middleware/rateLimiter.middleware");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
 
 const app = express();
 
@@ -36,6 +38,23 @@ app.use("/api", dashboardRoutes);
 app.use("/api", analyticsRoutes);
 app.use("/api", paymentRoutes);
 app.use(errorHandler);
+app.use(
+    "/api/docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec)
+);
+
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     summary: Check server status
+ *     tags:
+ *       - Health
+ *     responses:
+ *       200:
+ *         description: Server is running
+ */
 
 //Health check route
 app.get("/api/health", (req, res) => {

@@ -1,17 +1,21 @@
 function GlassCard({ children, className = "" }) {
-    return(
-        <div className={`
+  return (
+    <div
+      className={`
         glass
+        w-full
+        max-w-md
         rounded-3xl
-        p-8
-        shadow-2xl
         border
         border-white/20
+        p-10
+        shadow-2xl
         ${className}
-        `}>
-            {children}
-        </div>
-    );
+      `}
+    >
+      {children}
+    </div>
+  );
 }
 
-export default GlassCard
+export default GlassCard;

@@ -20,7 +20,10 @@ const app = express();
 app.use(helmet());
 
 //Allow frontend requests
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}));
 
 // Parse JSON request bodies
 app.use(express.json());

@@ -1,12 +1,16 @@
 function LoginHeader() {
   return (
-    <div className="text-center mb-8">
+    <div className="mb-8 text-center">
 
       <h1 className="text-4xl font-bold tracking-tight">
-        Expense Manager
+        SplitEase
       </h1>
 
-      <p className="mt-3 text-slate-500 dark:text-slate-300">
+      <p className="mt-2 text-lg font-medium text-[#3A7F7A]">
+        Smart Expense Sharing Made Easy
+      </p>
+
+      <p className="mt-4 text-slate-500 dark:text-slate-300">
         Welcome back 👋
       </p>
 

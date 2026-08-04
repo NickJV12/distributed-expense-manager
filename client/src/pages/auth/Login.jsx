@@ -26,17 +26,20 @@ function Login(){
     const onSubmit = async (data) => {
         try{
             const response = await login(data);
+            
+            const {user, token} = response;
 
             dispatch(
                 loginSuccess({
-                    user: response.data.user,
-                    token: response.data.token,
+                    user,
+                    token,
                 })
             );
 
-            toast.success("Welcome back!");
+            toast.success(response.data.message);
             navigate("/dashboard");
         } catch (error) {
+            console.error("Login Error:", error);
             toast.error(
                 error?.response?.data?.message || "Login failed"
             );

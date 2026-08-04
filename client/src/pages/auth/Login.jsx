@@ -27,7 +27,7 @@ function Login(){
         try{
             const response = await login(data);
             
-            const {user, token} = response;
+            const {user, token} = response.data;
 
             dispatch(
                 loginSuccess({
@@ -36,7 +36,7 @@ function Login(){
                 })
             );
 
-            toast.success(response.data.message);
+            toast.success(response.message);
             navigate("/dashboard");
         } catch (error) {
             console.error("Login Error:", error);

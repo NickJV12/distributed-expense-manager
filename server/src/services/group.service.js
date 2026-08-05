@@ -72,10 +72,32 @@ const addMember = async (groupId, ownerId, email) => {
     return groupRepository.addMember(groupId, user.id);
 }
 
+const getGroupMembers = async (groupId, userId) => {
+    const group = await groupRepository.getGroupById(groupId);
+
+    if (!group) {
+        throw new NotFoundError("Group not found");
+    }
+
+    const membership = await groupRepository.findMembership(
+        groupId,
+        userId
+    );
+
+    if (!membership) {
+        throw new ForbiddenError(
+            "You are not a member of this group"
+        );
+    }
+
+    return groupRepository.getGroupMembers(groupId);
+};
+
 module.exports = {
     createGroup,
     getUserGroups,
     getGroupById,
     addMember,
+    getGroupMembers,
 };
 

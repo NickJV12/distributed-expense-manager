@@ -40,8 +40,23 @@ const getSettlements = asyncHandler(async (req, res) => {
     });
 });
 
+const getGroupExpenses = asyncHandler(async (req, res) => {
+
+    const expenses = await expenseService.getGroupExpenses(
+        req.params.groupId,
+        req.user.id
+    );
+
+    res.status(200).json({
+        success: true,
+        data: expenses,
+    });
+
+});
+
 module.exports = {
     createExpense,
     getBalances,
     getSettlements,
+    getGroupExpenses,
 };

@@ -4,6 +4,7 @@ import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import Groups from "./pages/Groups";
+import Expenses from "./pages/Expenses";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/groups" element={<Groups />} />
+      <Route path="/expenses" element={<Expenses />}/>
     </Routes>
   );
 }

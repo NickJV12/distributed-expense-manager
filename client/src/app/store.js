@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
 import groupReducer from "../features/groups/groupSlice";
+import expenseReducer from "../features/expenses/expenseSlice";
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         dashboard: dashboardReducer,
         groups: groupReducer,
+        expenses: expenseReducer,
     },
 });

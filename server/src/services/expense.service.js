@@ -181,8 +181,30 @@ const calculateSettlements = async (groupId, userId) => {
     return settlements;
 }
 
+const getGroupExpenses = async (groupId, userId) => {
+    const group = await groupRepository.getGroupById(groupId);
+
+    if (!group) {
+        throw new NotFoundError("Group not found");
+    }
+
+    const membership = await groupRepository.findMembership(
+        groupId,
+        userId
+    );
+
+    if (!membership) {
+        throw new ForbiddenError(
+            "You are not a member of this group"
+        );
+    }
+
+    return expenseRepository.getGroupExpenses(groupId);
+};
+
 module.exports = {
     createExpense,
     calculateBalances,
     calculateSettlements,
+    getGroupExpenses,
 };

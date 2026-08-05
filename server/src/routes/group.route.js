@@ -31,6 +31,12 @@ router.get(
     groupController.getGroup
 );
 
+router.get(
+    "/:groupId/members",
+    authenticate,
+    groupController.getGroupMembers
+);
+
 router.post(
     "/:groupId/members",
     authenticate,

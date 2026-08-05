@@ -39,15 +39,23 @@ router.post(
 );
 
 router.get(
+    "/groups/:groupId/expenses",
+    authenticate,
+    expenseController.getGroupExpenses
+);
+
+router.get(
     "/groups/:groupId/balances",
     authenticate,
     expenseController.getBalances
 );
+
 
 router.get(
     "/groups/:groupId/settlements",
     authenticate,
     expenseController.getSettlements
 );
+
 
 module.exports = router;

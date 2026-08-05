@@ -51,10 +51,25 @@ const addMember = asyncHandler(async (req, res) => {
     });
 });
 
+const getGroupMembers = asyncHandler(async (req, res) => {
+
+    const members = await groupService.getGroupMembers(
+        req.params.groupId,
+        req.user.id
+    );
+
+    res.status(200).json({
+        success: true,
+        data: members,
+    });
+
+});
+
 module.exports = {
     createGroup,
     getGroups,
     getGroup,
-    addMember
+    addMember,
+    getGroupMembers,
 };
 

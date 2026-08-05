@@ -5,8 +5,15 @@ function StatCard({
     color = "#3A7F7A",
 }) {
     return (
-        <div className="glass rounded-3xl p-6 shadow-lg">
-           <p className="text-slate-500">
+        <div className="glass
+      rounded-3xl
+      p-6
+      shadow-lg
+      transition-all
+      duration-300
+      hover:-translate-y-1
+      hover:shadow-xl">
+           <p className="text-slate-500 dark:text-slate-400">
             {title}
            </p>
 

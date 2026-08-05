@@ -10,6 +10,8 @@ import {
   setSummary,
 } from "../features/dashboard/dashboardSlice";
 
+import RecentExpenses from "../components/RecentExpenses";
+
 function Dashboard() {
   const dispatch = useDispatch();
 
@@ -47,12 +49,22 @@ function Dashboard() {
       </MainLayout>
     );
   }
+  
+   const hour = new Date().getHours();
+
+let greeting = "Good Evening";
+
+if (hour < 12) {
+  greeting = "Good Morning";
+} else if (hour < 18) {
+  greeting = "Good Afternoon";
+}
 
   return (
     <MainLayout>
       <div className="mb-10">
         <h1 className="text-5xl font-bold">
-          Welcome back, {user?.name} 👋
+          {greeting}, {user?.name} 👋
         </h1>
 
         <p className="mt-3 text-lg text-slate-500 dark:text-slate-400">
@@ -82,6 +94,8 @@ function Dashboard() {
           value={summary?.recentExpenses?.length ?? 0}
           color="#16A34A"
         />
+
+        <RecentExpenses expenses={summary?.recentExpenses || []} />
       </div>
     </MainLayout>
   );

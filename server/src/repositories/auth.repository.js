@@ -12,7 +12,14 @@ const createUser = async (userData) => {
     });
 };
 
+const findUserById = async (id) => {
+    return db.user.findUnique({
+        where: { id },
+    });
+};
+
 module.exports = {
     findUserByEmail,
-    createUser
+    createUser,
+    findUserById,
 };

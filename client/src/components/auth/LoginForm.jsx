@@ -1,6 +1,7 @@
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 
 function LoginForm({
   register,
@@ -8,6 +9,7 @@ function LoginForm({
   handleSubmit,
   onSubmit,
   isSubmitting,
+  onGoogleSuccess,
 }) {
   return (
     <form
@@ -45,27 +47,17 @@ function LoginForm({
       >
         Sign In
       </Button>
-      <button
-  type="button"
-  className="
-    mt-4
-    w-full
-    rounded-2xl
-    border
-    border-gray-300
-    bg-white
-    py-3
-    font-medium
-    text-gray-700
-    transition
-    hover:bg-gray-50
-    dark:border-slate-600
-    dark:bg-slate-800
-    dark:text-white
-  "
->
-  Continue with Google
-</button>
+      <div className="mt-4 flex justify-center">
+  <GoogleLogin
+    onSuccess={onGoogleSuccess}
+    onError={() => {
+      console.log("Google Login Failed");
+    }}
+    theme="outline"
+    size="large"
+    width="340"
+  />
+</div>
     </form>
   );
 }

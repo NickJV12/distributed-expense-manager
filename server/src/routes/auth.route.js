@@ -65,6 +65,11 @@ router.post(
     authController.login
 );
 
+router.post(
+    "/google",
+    authController.googleLogin
+);
+
 router.get(
     "/profile",
     authenticate,

@@ -33,8 +33,23 @@ const profile = asyncHandler(async (req, res) => {
     });
 });
 
+const googleLogin = asyncHandler(async (req, res) => {
+
+    const result = await authService.googleLogin(
+        req.body.token
+    );
+
+    res.status(200).json({
+        success: true,
+        message: "Google login successful",
+        data: result,
+    });
+
+});
+
 module.exports = {
     register,
     login,
     profile,
+    googleLogin,
 };

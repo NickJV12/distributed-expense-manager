@@ -12,6 +12,7 @@ import ThemeToggle from "../../components/ui/ThemeToggle";
 
 import { login } from "../../features/auth/authApi";
 import { loginSuccess } from "../../features/auth/authSlice";
+import { googleLogin } from "../../features/auth/authApi";
 
 function Login(){
     const dispatch = useDispatch();
@@ -46,6 +47,33 @@ function Login(){
         }
     };
 
+    const handleGoogleSuccess = async (credentialResponse) => {
+  try {
+    const response = await googleLogin(
+      credentialResponse.credential
+    );
+
+    const { user, token } = response.data;
+
+    dispatch(
+      loginSuccess({
+        user,
+        token,
+      })
+    );
+
+    toast.success("Google Login Successful");
+
+    navigate("/dashboard");
+
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message ||
+      "Google Login Failed"
+    );
+  }
+};
+
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-(--bg) px-4 ">
         <BackgroundBlobs />
@@ -63,6 +91,7 @@ function Login(){
              handleSubmit={handleSubmit}
              onSubmit={onSubmit}
              isSubmitting={isSubmitting}
+             onGoogleSuccess={handleGoogleSuccess}
             />
             
             <p className="mt-8 text-center text-sm">

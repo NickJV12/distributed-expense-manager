@@ -126,7 +126,7 @@ const calculateSettlements = async (groupId, userId) => {
     const creditors = [];
     const debtors = [];
 
-    for(const person of balances){
+    for(const person of balance){
         if(person.balance > 0){
             creditors.push({
                 ...person,
@@ -143,7 +143,8 @@ const calculateSettlements = async (groupId, userId) => {
     let i = 0;
     let j = 0;
     while(
-        i < debtors.length && j.creditors.length
+        i < debtors.length && 
+        j < creditors.length
     ) {
         const debtor = debtors[i];
         const creditor = creditors[j];

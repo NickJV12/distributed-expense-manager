@@ -3,6 +3,7 @@ import authReducer from "../features/auth/authSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
 import groupReducer from "../features/groups/groupSlice";
 import expenseReducer from "../features/expenses/expenseSlice";
+import analyticsReducer from "../features/analytics/analyticsSlice";
 
 export const store = configureStore({
     reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
         dashboard: dashboardReducer,
         groups: groupReducer,
         expenses: expenseReducer,
+        analytics: analyticsReducer,
     },
 });

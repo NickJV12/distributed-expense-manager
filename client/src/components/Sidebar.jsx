@@ -1,4 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../features/auth/authSlice";
+import toast from "react-hot-toast";
 import {
     LayoutDashboard,
     Users,
@@ -30,6 +34,17 @@ function Sidebar() {
             icon: BarChart3
         },
     ];
+     
+    const dispatch = useDispatch();
+const navigate = useNavigate();
+
+const handleLogout = () => {
+  dispatch(logout());
+
+  toast.success("Logged out successfully");
+
+  navigate("/login");
+};
 
     return (
         <aside className="w-72 p-6">
@@ -53,16 +68,8 @@ function Sidebar() {
                 })}
              </nav>
              <div className="mt-auto">
-               <button className="flex
-              w-full
-              items-center
-              gap-4
-              rounded-2xl
-              px-5
-              py-4
-              text-red-500
-              transition
-              hover:bg-red-100">
+               <button  onClick={handleLogout}
+                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-red-100 dark:hover:bg-red-900/20">
                 <LogOut size={22} />
                 Logout
                </button>

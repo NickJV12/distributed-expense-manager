@@ -93,6 +93,15 @@ const getGroupMembers = async (groupId) => {
         where: {
             groupId: Number(groupId),
         },
+        include: {
+            user: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                },
+            },
+        },
     });
 };
 

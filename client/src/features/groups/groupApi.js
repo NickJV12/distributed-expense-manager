@@ -26,6 +26,23 @@ export const createGroup = async (data) => {
     return response.data;
 };
 
+// ✅ Add member to group
+export const addMember = async (groupId, email) => {
+  const token = localStorage.getItem("token");
+
+  const response = await api.post(
+    `/groups/${groupId}/members`,
+    { email },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
+};
+
 export const getGroupMembers = async (groupId) => {
   const response = await api.get(
     `/groups/${groupId}/members`,
